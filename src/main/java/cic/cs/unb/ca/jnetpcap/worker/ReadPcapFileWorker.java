@@ -125,11 +125,9 @@ public class ReadPcapFileWorker extends SwingWorker<List<String>,String> {
     }
 
     private void readPcapFile(String inputFile, String outPath) {
-
         if(inputFile==null ||outPath==null ) {
             return;
         }
-
         Path p = Paths.get(inputFile);
         String fileName = p.getFileName().toString();//FilenameUtils.getName(inputFile);
 
@@ -137,21 +135,21 @@ public class ReadPcapFileWorker extends SwingWorker<List<String>,String> {
         if(!outPath.endsWith(FILE_SEP)){
             outPath += FILE_SEP;
         }
-
         File saveFileFullPath = new File(outPath+fileName+Utils.FLOW_SUFFIX);
-
         if (saveFileFullPath.exists()) {
             if (!saveFileFullPath.delete()) {
                 System.out.println("Saved file full path cannot be deleted");
             }
         }
 
-
         FlowGenerator flowGen = new FlowGenerator(true, flowTimeout, activityTimeout);
+
         flowGen.addFlowListener(new FlowListener(fileName));
+
         boolean readIP6 = false;
         boolean readIP4 = true;
         PacketReader packetReader = new PacketReader(inputFile, readIP4, readIP6);
+
         publish(String.format("Working on... %s",inputFile));
         logger.debug("Working on... {}",inputFile);
 

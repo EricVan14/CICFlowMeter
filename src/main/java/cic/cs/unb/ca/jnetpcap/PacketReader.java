@@ -56,7 +56,6 @@ public class PacketReader {
         file = filename;
 		StringBuilder errbuf = new StringBuilder(); // For any error msgs
 		pcapReader = Pcap.openOffline(filename, errbuf);
-		
 		this.firstPacket = 0L;
 		this.lastPacket = 0L;
 
